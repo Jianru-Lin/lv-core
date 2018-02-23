@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { CycleModal } from '../def/CycleModel'
 import { Block, BlockData } from './Block'
+import { WithState } from './WithState'
 import * as color from '../style/color'
 
 export interface LeftRightPairData {
@@ -107,3 +108,11 @@ export function LeftRightPair(props: LeftRightPairP) {
     return dataCloned
   }
 }
+
+export const LeftRightPairWithState = WithState<LeftRightPairData, LeftRightPairP>(
+  LeftRightPair,
+  {
+    hover: { left: false, right: false },
+    blockData: { open: false, hover: false }
+  }
+)

@@ -1,27 +1,41 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { LeftRightPair, LeftRightPairData } from 'lv-core'
+import { LeftRightPair, LeftRightPairData, LeftRightPairWithState } from 'lv-core'
 import { randomSelect } from './utils/randomSelect'
 
 const content = (
   <div>
-    {
-      allContent().map((content, i) => (
-        <div>
-          <h1 style={{ margin: '64px 0', color: 'yellow' }}>Content #{i + 1}</h1>
+    <div>
+      {
+        allContent().map((content, i) => (
           <div>
-            {allData().map(data => (
-              <div style={{ marginBottom: 48 }}>
-                <div style={{ color: 'white', fontSize: '0.75em', marginBottom: 16 }}>data: {JSON.stringify(data)}</div>
-                <LeftRightPair left='{' right='}' data={data} onChange={_ => { }}>
-                  {content}
-                </LeftRightPair>
-              </div>
-            ))}
+            <h1 style={{ margin: '64px 0', color: 'yellow' }}>Content #{i + 1}</h1>
+            <div>
+              {allData().map(data => (
+                <div style={{ marginBottom: 48 }}>
+                  <div style={{ color: 'white', fontSize: '0.75em', marginBottom: 16 }}>data: {JSON.stringify(data)}</div>
+                  <LeftRightPair left='{' right='}' data={data} onChange={_ => { }}>
+                    {content}
+                  </LeftRightPair>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))
-    }
+        ))
+      }
+    </div>
+    <div>
+      <h1 style={{ margin: '64px 0', color: 'yellow' }}>WithState</h1>
+      <LeftRightPairWithState left='{' right='}' style={{ marginBottom: 16 }}>
+        Content
+      </LeftRightPairWithState>
+      <LeftRightPairWithState left='-->' right='' style={{ marginBottom: 16 }} >
+        Content
+      </LeftRightPairWithState>
+      <LeftRightPairWithState left='' right='<--' style={{ marginBottom: 16 }} >
+        Content
+      </LeftRightPairWithState>
+    </div>
   </div>
 )
 
