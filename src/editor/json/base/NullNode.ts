@@ -1,5 +1,5 @@
 import { Node, NodeType } from './def/Node'
-import { Block, BlockData } from '../../../components/Block'
+import { Block, BlockStatus } from '../../../components/Block'
 
 export class NullNode implements Node {
   getType() {

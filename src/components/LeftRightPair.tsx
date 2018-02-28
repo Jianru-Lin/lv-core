@@ -1,18 +1,84 @@
 import * as React from 'react'
 import { CycleModal } from '../def/CycleModel'
-import { Block, BlockData } from './Block'
+import { Block, BlockStatus } from './Block'
 import { WithState } from './WithState'
 import * as color from '../style/color'
 
-export interface LeftRightPairData {
-  hover: {
-    left: boolean
-    right: boolean
+export class LeftRightPairStatus {
+  private hover: boolean
+  private blockStatus: BlockStatus
+
+  static AllPossibleStatus(): LeftRightPairStatus[] {
+    const [y, n] = [true, false]
+    return [
+      new LeftRightPairStatus(y).setOpen(y),
+      new LeftRightPairStatus(y).setOpen(n),
+      new LeftRightPairStatus(n).setOpen(y),
+      new LeftRightPairStatus(n).setOpen(n),
+    ]
   }
-  blockData: BlockData
+
+  constructor(hover: boolean) {
+    this.hover = hover
+    this.blockStatus = new BlockStatus(false, hover)
+  }
+
+  clone() {
+    const obj = new LeftRightPairStatus(this.hover)
+    obj.blockStatus = this.blockStatus
+    return obj
+  }
+
+  getBlockStatus() {
+    return this.blockStatus
+  }
+
+  setBlockStatus(v: BlockStatus): LeftRightPairStatus {
+    const clone = this.clone()
+    clone.blockStatus = v
+    return clone
+  }
+
+  getHover() {
+    return this.hover
+  }
+
+  setHover(v: boolean): LeftRightPairStatus {
+    if (v === this.hover) return this
+    const clone = this.clone()
+    clone.hover = v
+    clone.blockStatus = this.blockStatus.setHover(v)
+    return clone
+  }
+
+  getOpen() {
+    return this.blockStatus.getOpen()
+  }
+
+  setOpen(v: boolean): LeftRightPairStatus {
+    if (v === this.blockStatus.getOpen()) return this
+    const clone = this.clone()
+    clone.blockStatus = clone.blockStatus.setOpen(v)
+    return clone
+  }
+
+  switchOpen(): LeftRightPairStatus {
+    return this.setOpen(!this.getOpen())
+  }
+
+  toJSON() {
+    return {
+      hover: this.hover,
+      open: this.blockStatus.getOpen(),
+    }
+  }
+
+  toString() {
+    return JSON.stringify(this.toJSON())
+  }
 }
 
-export interface LeftRightPairP extends CycleModal<LeftRightPairData> {
+export interface LeftRightPairP extends CycleModal<LeftRightPairStatus> {
   left: string
   right: string
 }
@@ -47,72 +113,42 @@ const DefaultStyle: LeftRightPairStyle = {
 
 export function LeftRightPair(props: LeftRightPairP) {
   const { left, right } = props
-  const { hover, blockData } = props.data
+  const status = props.data
 
   const style: { [key: string]: React.CSSProperties } = {
     root: {
       ...DefaultStyle.root,
       ...props.style
     },
-    left: {
+    left_and_right: {
       ...DefaultStyle.left_and_right.normal,
-      ...(hover.left ? DefaultStyle.left_and_right.hover : null)
+      ...(status.getHover() ? DefaultStyle.left_and_right.hover : null)
     },
-    right: {
-      ...DefaultStyle.left_and_right.normal,
-      ...(hover.right ? DefaultStyle.left_and_right.hover : null)
-    }
   }
 
   return (
     <div style={style.root}>
       <div
-        style={style.left}
-        onMouseEnter={_ => fireChange(data => data.hover.left = data.hover.right = true)}
-        onMouseLeave={_ => fireChange(data => data.hover.left = data.hover.right = false)}
-        onClick={_ => fireChange(data => data.blockData.open = !data.blockData.open)} >
+        style={style.left_and_right}
+        onMouseEnter={_ => props.onChange(status.setHover(true))}
+        onMouseLeave={_ => props.onChange(status.setHover(false))}
+        onClick={_ => props.onChange(status.switchOpen())} >
         {left}
       </div>
       <Block
-        data={props.data.blockData}
-        onChange={blockData => fireChange(data => data.blockData = blockData)}>
+        data={status.getBlockStatus()}
+        onChange={newBlockStatus => props.onChange(status.setBlockStatus(newBlockStatus))}>
         {props.children}
       </Block>
       <div
-        style={style.right}
-        onMouseEnter={_ => fireChange(data => data.hover.right = data.hover.left = true)}
-        onMouseLeave={_ => fireChange(data => data.hover.right = data.hover.left = false)}
-        onClick={_ => fireChange(data => data.blockData.open = !data.blockData.open)} >
+        style={style.left_and_right}
+        onMouseEnter={_ => props.onChange(status.setHover(true))}
+        onMouseLeave={_ => props.onChange(status.setHover(false))}
+        onClick={_ => props.onChange(status.switchOpen())} >
         {right}
       </div>
     </div>
   )
-
-  function fireChange(cb: (data: LeftRightPairData) => void) {
-    if (!props.onChange) return
-    props.onChange(rewriteData(cb))
-  }
-
-  function rewriteData(cb: (data: LeftRightPairData) => void): LeftRightPairData {
-    const dataCloned = {
-      hover: {
-        left: props.data.hover.left,
-        right: props.data.hover.right,
-      },
-      blockData: {
-        open: props.data.blockData.open,
-        hover: props.data.blockData.hover,
-      }
-    }
-    cb(dataCloned)
-    return dataCloned
-  }
 }
 
-export const LeftRightPairWithState = WithState<LeftRightPairData, LeftRightPairP>(
-  LeftRightPair,
-  {
-    hover: { left: false, right: false },
-    blockData: { open: false, hover: false }
-  }
-)
+export const LeftRightPairWithState = WithState<LeftRightPairStatus, LeftRightPairP>(LeftRightPair, new LeftRightPairStatus(false))

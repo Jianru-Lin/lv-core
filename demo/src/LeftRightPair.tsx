@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { LeftRightPair, LeftRightPairData, LeftRightPairWithState } from 'lv-core'
+import { LeftRightPair, LeftRightPairStatus, LeftRightPairWithState } from 'lv-core'
 import { randomSelect } from './utils/randomSelect'
 
 const content = (
@@ -11,9 +11,9 @@ const content = (
           <div>
             <h1 style={{ margin: '64px 0', color: 'yellow' }}>Content #{i + 1}</h1>
             <div>
-              {allData().map(data => (
+              {LeftRightPairStatus.AllPossibleStatus().map(data => (
                 <div style={{ marginBottom: 48 }}>
-                  <div style={{ color: 'white', fontSize: '0.75em', marginBottom: 16 }}>data: {JSON.stringify(data)}</div>
+                  <div style={{ color: 'white', fontSize: '0.75em', marginBottom: 16 }}>data: {data.toString()}</div>
                   <LeftRightPair left='{' right='}' data={data} onChange={_ => { }}>
                     {content}
                   </LeftRightPair>
@@ -41,39 +41,8 @@ const content = (
 
 ReactDOM.render(content, document.getElementById('root'))
 
-function allData() {
-  const _ = false
-  const y = true
-  const list: LeftRightPairData[] = []
-  allHover().forEach(hover => {
-    allBlockData().forEach(blockData => {
-      list.push({ hover, blockData })
-    })
-  })
-  return list
-
-  function allHover() {
-    return [
-      { left: _, right: _ },
-      { left: y, right: _ },
-      { left: _, right: y },
-      { left: y, right: y },
-      { left: y, right: y },
-    ]
-  }
-
-  function allBlockData() {
-    return [
-      { hover: _, open: _ },
-      { hover: y, open: _ },
-      { hover: _, open: y },
-      { hover: y, open: y },
-    ]
-  }
-}
-
 function randomData() {
-  return randomSelect(allData())
+  return randomSelect(LeftRightPairStatus.AllPossibleStatus())
 }
 
 function allContent(): React.ReactNode[] {

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { LeftRightPair, LeftRightPairWithState } from './LeftRightPair'
+import { LeftRightPair, LeftRightPairStatus, LeftRightPairWithState } from './LeftRightPair'
 import * as renderer from 'react-test-renderer'
 
 test('LeftRightPair: ()', () => {
@@ -15,16 +15,7 @@ test('LeftRightPairWithState', () => {
 })
 
 function genData() {
-  return {
-    hover: {
-      left: Math.random() >= 0.5,
-      right: Math.random() >= 0.5,
-    },
-    blockData: {
-      open: Math.random() >= 0.5,
-      hover: Math.random() >= 0.5,
-    }
-  }
+  return new LeftRightPairStatus(Math.random() >= 0.5).setOpen(Math.random() >= 0.5)
 }
 
 function onChange(data: any) {

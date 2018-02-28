@@ -1,15 +1,15 @@
 import { JsonValue } from './def/JsonValue'
 import { Node, NodeType } from './def/Node'
 import { createNodeFromValue } from '../internal/createNodeFromValue'
-import { LeftRightPair, LeftRightPairData } from '../../../components/LeftRightPair'
+import { LeftRightPair, LeftRightPairStatus } from '../../../components/LeftRightPair'
 
 export class ArrayNode implements Node {
   // core
-  value: any[]
-  elements: Node[]
+  private value: any[]
+  private elements: Node[]
   // ui
-  layout: 'V' | 'H'
-  leftRightPairData: LeftRightPairData
+  private layout: 'V' | 'H'
+  private leftRightPairStatus: LeftRightPairStatus
 
   constructor(value: JsonValue[]) {
     // core
@@ -17,10 +17,7 @@ export class ArrayNode implements Node {
     this.elements = value.map(createNodeFromValue)
     // ui
     this.layout = 'V'
-    this.leftRightPairData = {
-      hover: { left: false, right: false },
-      blockData: { open: true, hover: false }
-    }
+    this.leftRightPairStatus = new LeftRightPairStatus(false)
   }
 
   clone(): ArrayNode {
@@ -30,7 +27,7 @@ export class ArrayNode implements Node {
     obj.elements = this.elements
     // ui
     obj.layout = this.layout
-    obj.leftRightPairData = this.leftRightPairData // TODO: DANGER!
+    obj.leftRightPairStatus = this.leftRightPairStatus // TODO: DANGER!
     return obj
   }
 
@@ -72,6 +69,21 @@ export class ArrayNode implements Node {
 
   getLayout() {
     return this.layout
+  }
+
+  getElements() {
+    return this.elements
+  }
+
+  getLeftRightPairStatus() {
+    return this.leftRightPairStatus
+  }
+
+  setLeftRightPairStatus(v: LeftRightPairStatus): ArrayNode {
+    if (v === this.leftRightPairStatus) return this
+    const clone = this.clone()
+    clone.leftRightPairStatus = v
+    return clone
   }
 
   switchLayout(): ArrayNode {

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { LeftRightPair, LeftRightPairData } from '../../../components/LeftRightPair'
+import { LeftRightPair, LeftRightPairStatus } from '../../../components/LeftRightPair'
 import { switchNodeType } from '../internal/switchNodeType'
 import { NullEditor } from './NullEditor'
 import { ArrayNode } from '../base/ArrayNode'
@@ -13,7 +13,7 @@ export function ArrayEditor(props: ArrayEditorP): React.ReactElement<any> | null
   const style: { [key: string]: React.CSSProperties } = {
     root: {
       display: 'flex',
-      flexDirection: props.status.layout === 'H' ? 'row' : 'column',
+      flexDirection: props.status.getLayout() === 'H' ? 'row' : 'column',
     },
     element: {
       display: 'flex',
@@ -25,10 +25,10 @@ export function ArrayEditor(props: ArrayEditorP): React.ReactElement<any> | null
   }
 
   let body: React.ReactNode = null
-  if (props.status.elements.length) {
+  if (props.status.getElements().length) {
     body = (
       <div style={style.root}>
-        {props.status.elements.map((node, i) => (
+        {props.status.getElements().map((node, i) => (
           <div style={style.element}>
             {
               switchNodeType<React.ReactNode>(node, {
@@ -53,7 +53,7 @@ export function ArrayEditor(props: ArrayEditorP): React.ReactElement<any> | null
               })
             }
             {
-              i < props.status.value.length - 1 ? (
+              i < props.status.getValue().length - 1 ? (
                 <span
                   style={style.comma}
                   onClick={e => props.onChangeStatus(props.status.switchLayout())}>
@@ -70,10 +70,9 @@ export function ArrayEditor(props: ArrayEditorP): React.ReactElement<any> | null
   return (
     <LeftRightPair
       left='[' right=']'
-      data={props.status.leftRightPairData}
-      onChange={leftRightPairData => {
-        props.status.leftRightPairData = leftRightPairData
-        props.onChangeStatus(props.status)
+      data={props.status.getLeftRightPairStatus()}
+      onChange={leftRightPairStatus => {
+        props.onChangeStatus(props.status.setLeftRightPairStatus(leftRightPairStatus))
       }}>
       {body}
     </LeftRightPair>

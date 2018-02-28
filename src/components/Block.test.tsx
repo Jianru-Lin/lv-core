@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Block } from './Block'
+import { Block, BlockStatus } from './Block'
 import * as renderer from 'react-test-renderer'
 
 test('Block: empty', () => {
@@ -23,10 +23,9 @@ test('Block: in block', () => {
 })
 
 function genData() {
-  return {
-    open: Math.random() >= 0.5,
-    hover: Math.random() >= 0.5,
-  }
+  const open = Math.random() >= 0.5
+  const hover = Math.random() >= 0.5
+  return new BlockStatus(open, hover)
 }
 
 function onChange(data: any) {

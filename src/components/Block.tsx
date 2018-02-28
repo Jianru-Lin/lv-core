@@ -3,12 +3,53 @@ import { CycleModal } from '../def/CycleModel'
 import { WithState } from './WithState'
 import * as color from '../style/color'
 
-export type BlockData = {
-  open: boolean
-  hover: boolean
+export class BlockStatus {
+  private open: boolean
+  private hover: boolean
+
+  constructor(open: boolean, hover: boolean) {
+    this.open = open
+    this.hover = hover
+  }
+
+  clone() {
+    const obj = new BlockStatus(this.open, this.hover)
+    return obj
+  }
+
+  getOpen() {
+    return this.open
+  }
+
+  setOpen(v: boolean): BlockStatus {
+    const clone = this.clone()
+    clone.open = v
+    return clone
+  }
+
+  getHover() {
+    return this.hover
+  }
+
+  setHover(v: boolean): BlockStatus {
+    const clone = this.clone()
+    clone.hover = v
+    return clone
+  }
+
+  toJSON() {
+    return {
+      open: this.open,
+      hover: this.hover
+    }
+  }
+
+  toString() {
+    return JSON.stringify(this.toJSON())
+  }
 }
 
-export interface BlockP extends CycleModal<BlockData> {
+export interface BlockP extends CycleModal<BlockStatus> {
 }
 
 interface BlockStyle {
@@ -60,15 +101,15 @@ const DefaultStyle: BlockStyle = {
 }
 
 export function Block(props: BlockP) {
-  const { open, hover } = props.data
+  const status = props.data
 
-  if (!open) {
+  if (!status.getOpen()) {
     return (
       <div
         style={calcStyle()}
-        onMouseEnter={_ => fireChange({ open, hover: true })}
-        onMouseLeave={_ => fireChange({ open, hover: false })}
-        onClick={_ => fireChange({ open: true, hover })} >
+        onMouseEnter={_ => fireChange(status.setHover(true))}
+        onMouseLeave={_ => fireChange(status.setHover(false))}
+        onClick={_ => fireChange(status.setOpen(true))} >
         ...
         </div>
     )
@@ -85,28 +126,27 @@ export function Block(props: BlockP) {
       ref={dom => containerDom = dom}
       style={calcStyle()}
       onClick={e => {
-        // if (containerDom && e.target === containerDom) fireChange({ open: false, hover })
+        // if (containerDom && e.target === containerDom) fireChange(...)
       }}
-      onMouseEnter={_ => fireChange({ open, hover: true })}
-      onMouseLeave={_ => fireChange({ open, hover: false })} >
+      onMouseEnter={_ => fireChange(status.setHover(true))}
+      onMouseLeave={_ => fireChange(status.setHover(false))} >
       {children}
     </div>
   )
 
   function calcStyle() {
-    const { open, hover } = props.data
-    const targetStyle = open ? DefaultStyle.open : DefaultStyle.close
+    const targetStyle = status.getOpen() ? DefaultStyle.open : DefaultStyle.close
     return {
       ...DefaultStyle.base,
       ...targetStyle.normal,
-      ...(hover ? targetStyle.hover : null),
+      ...(status.getHover() ? targetStyle.hover : null),
       ...props.style
     }
   }
 
-  function fireChange(data: BlockData) {
+  function fireChange(data: BlockStatus) {
     if (props.onChange) props.onChange(data)
   }
 }
 
-export const BlockWithState = WithState<BlockData>(Block, { open: false, hover: false })
+export const BlockWithState = WithState<BlockStatus>(Block, new BlockStatus(false, false))
