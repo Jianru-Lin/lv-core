@@ -11,7 +11,7 @@ const defaultStyle: React.CSSProperties = {
 
 export function Icon(props: IconP) {
   return (
-    <i className="material-icons" style={props.style}>{props.name}</i>
+    <i className="material-icons" style={{ fontSize: 'inherit', ...props.style }}>{props.name}</i>
   )
 }
 

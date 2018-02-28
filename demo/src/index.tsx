@@ -7,6 +7,8 @@ const links = [
     'Icon',
     'Menu',
     'MenuItem',
+    'ButtonMenu',
+    'JsonEditor',
 ]
 
 const content = (

@@ -75,17 +75,21 @@ export function Block(props: BlockP) {
   }
 
   let containerDom: (HTMLDivElement | null) = null;
+  let children = props.children
+  if (!children || (Array.isArray(children) && children.length === 0)) {
+    children = <div style={{ width: 0, overflow: 'hidden', whiteSpace: 'pre' }}> </div>
+  }
 
   return (
     <div
       ref={dom => containerDom = dom}
       style={calcStyle()}
       onClick={e => {
-        if (containerDom && e.target === containerDom) fireChange({ open: false, hover })
+        // if (containerDom && e.target === containerDom) fireChange({ open: false, hover })
       }}
       onMouseEnter={_ => fireChange({ open, hover: true })}
       onMouseLeave={_ => fireChange({ open, hover: false })} >
-      {props.children || <div style={{ width: 0, overflow: 'hidden', whiteSpace: 'pre' }}> </div>}
+      {children}
     </div>
   )
 
