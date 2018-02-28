@@ -36,6 +36,7 @@ export class LeftRightPairStatus {
   setBlockStatus(v: BlockStatus): LeftRightPairStatus {
     const clone = this.clone()
     clone.blockStatus = v
+    clone.hover = v.getHover() // sync
     return clone
   }
 
