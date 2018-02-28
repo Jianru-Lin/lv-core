@@ -24,14 +24,9 @@ export function ArrayEditor(props: ArrayEditorP): React.ReactElement<any> | null
     }
   }
 
-  return (
-    <LeftRightPair
-      left='[' right=']'
-      data={props.status.leftRightPairData}
-      onChange={leftRightPairData => {
-        props.status.leftRightPairData = leftRightPairData
-        props.onChangeStatus(props.status)
-      }}>
+  let body: React.ReactNode = null
+  if (props.status.elements.length) {
+    body = (
       <div style={style.root}>
         {props.status.elements.map((node, i) => (
           <div style={style.element}>
@@ -69,6 +64,18 @@ export function ArrayEditor(props: ArrayEditorP): React.ReactElement<any> | null
           </div>
         ))}
       </div>
+    )
+  }
+
+  return (
+    <LeftRightPair
+      left='[' right=']'
+      data={props.status.leftRightPairData}
+      onChange={leftRightPairData => {
+        props.status.leftRightPairData = leftRightPairData
+        props.onChangeStatus(props.status)
+      }}>
+      {body}
     </LeftRightPair>
   )
 }
