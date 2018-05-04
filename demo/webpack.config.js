@@ -1,18 +1,17 @@
-var fs = require('fs')
-var path = require('path')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var CopyWebpackPlugin = require('copy-webpack-plugin')
+var fs = require('fs');
+var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = auto_entries({
-    devtool: "source-map",
-    entry: {
-    },
+    devtool: 'source-map',
+    entry: {},
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: '[name].bundle.js'
+        filename: '[name].bundle.js',
     },
     resolve: {
-        extensions: [".tsx", ".ts", ".js"]
+        extensions: ['.tsx', '.ts', '.js'],
     },
     module: {
         rules: [
@@ -23,33 +22,31 @@ module.exports = auto_entries({
             },
             {
                 test: /\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader'
-                ]
-            }
-        ]
+                use: ['style-loader', 'css-loader'],
+            },
+        ],
     },
-    plugins: [
-    ]
-})
+    plugins: [],
+});
 
 function auto_entries(config) {
-    var dir = path.resolve(__dirname, 'src')
-    var entry_names = fs.readdirSync(dir).filter(function (item) {
-        return /\.tsx$/i.test(item)
-    })
+    var dir = path.resolve(__dirname, 'src');
+    var entry_names = fs.readdirSync(dir).filter(function(item) {
+        return /\.tsx$/i.test(item);
+    });
 
-    entry_names.forEach(function (ename) {
-        var ename_ = ename.replace(/\.tsx$/i, '')
-        config.entry[ename_] = path.resolve(dir, ename)
-        config.plugins.push(new HtmlWebpackPlugin({
-            filename: ename_ + '.html',
-            chunks: [ename_],
-            template: './template.html'
-        }))
-    })
+    entry_names.forEach(function(ename) {
+        var ename_ = ename.replace(/\.tsx$/i, '');
+        config.entry[ename_] = path.resolve(dir, ename);
+        config.plugins.push(
+            new HtmlWebpackPlugin({
+                filename: ename_ + '.html',
+                chunks: [ename_],
+                template: './template.html',
+            })
+        );
+    });
 
     // console.log(JSON.stringify(config, null, 4))
-    return config
+    return config;
 }

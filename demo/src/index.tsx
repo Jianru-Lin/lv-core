@@ -1,21 +1,16 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 
-const links = [
-    'Block',
-    'LeftRightPair',
-    'Icon',
-    'Menu',
-    'MenuItem',
-    'ButtonMenu',
-    'JsonEditor',
-]
+const links = ['Block', 'LeftRightPair', 'Icon', 'Menu', 'MenuItem', 'ButtonMenu', 'JsonEditor'];
 
 const content = (
     <div
         style={{
             position: 'absolute',
-            left: 0, top: 0, right: 0, bottom: 0,
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
             color: 'white',
             padding: 40,
         }}>
@@ -28,6 +23,6 @@ const content = (
             ))}
         </ul>
     </div>
-)
+);
 
-ReactDOM.render(content, document.getElementById('root'))
+ReactDOM.render(content, document.getElementById('root'));

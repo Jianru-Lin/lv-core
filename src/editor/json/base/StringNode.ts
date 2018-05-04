@@ -1,27 +1,27 @@
-import { Node, NodeType } from './def/Node'
+import { Node, NodeType } from './def/Node';
 
 export class StringNode implements Node {
-  private value: string
+    private value: string;
 
-  constructor(value: string) {
-    this.value = value
-  }
+    constructor(value: string) {
+        this.value = value;
+    }
 
-  getType() {
-    return NodeType.String
-  }
+    getType() {
+        return NodeType.String;
+    }
 
-  getValue() {
-    return this.value
-  }
+    getValue() {
+        return this.value;
+    }
 
-  setValue(value: string): StringNode {
-    return new StringNode(value)
-  }
+    setValue(value: string): StringNode {
+        return new StringNode(value);
+    }
 
-  // switchType<T>(map: NodeSwitchTypeCase<T>) {
-  //   if (map.tString) {
-  //     return map.tString()
-  //   }
-  // }
+    // switchType<T>(map: NodeSwitchTypeCase<T>) {
+    //   if (map.tString) {
+    //     return map.tString()
+    //   }
+    // }
 }

@@ -1,37 +1,37 @@
 {
-  "name": "lv-core",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "cd dist && jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Jianru-Lin/lv-core.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Jianru-Lin/lv-core/issues"
-  },
-  "homepage": "https://github.com/Jianru-Lin/lv-core#readme",
-  "dependencies": {
-    "immutable": "^3.8.2",
-    "material-design-icons": "^3.0.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
-  },
-  "devDependencies": {
-    "@types/jest": "^22.1.2",
-    "@types/react": "^16.0.37",
-    "@types/react-dom": "^16.0.4",
-    "@types/react-test-renderer": "^16.0.1",
-    "jest": "^22.2.2",
-    "react-test-renderer": "^16.2.0"
-  }
+    "name": "lv-core",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "watch": "tsc -w",
+        "test": "cd dist && jest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Jianru-Lin/lv-core.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Jianru-Lin/lv-core/issues"
+    },
+    "homepage": "https://github.com/Jianru-Lin/lv-core#readme",
+    "dependencies": {
+        "immutable": "^3.8.2",
+        "material-design-icons": "^3.0.1",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0"
+    },
+    "devDependencies": {
+        "@types/jest": "^22.1.2",
+        "@types/react": "^16.0.37",
+        "@types/react-dom": "^16.0.4",
+        "@types/react-test-renderer": "^16.0.1",
+        "jest": "^22.2.2",
+        "react-test-renderer": "^16.2.0"
+    }
 }

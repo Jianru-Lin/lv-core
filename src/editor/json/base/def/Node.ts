@@ -1,4 +1,4 @@
-import { JsonValue } from './JsonValue'
+import { JsonValue } from './JsonValue';
 
 // export interface NodeSwitchTypeCase<T> {
 //   tNull?: () => T
@@ -10,18 +10,18 @@ import { JsonValue } from './JsonValue'
 // }
 
 export interface Node {
-  getType(): NodeType
-  // switchType<T = any>(map: NodeSwitchTypeCase<T>): T | undefined
-  getValue(): JsonValue
+    getType(): NodeType;
+    // switchType<T = any>(map: NodeSwitchTypeCase<T>): T | undefined
+    getValue(): JsonValue;
 }
 
 export enum NodeType {
-  Null,
-  Boolean,
-  Number,
-  String,
-  Array,
-  Object,
+    Null,
+    Boolean,
+    Number,
+    String,
+    Array,
+    Object,
 }
 
 // export type Node = NullNode | BooleanNode | NumberNode | StringNode | ArrayNode | ObjectNode

@@ -1,12 +1,8 @@
-import * as React from 'react'
+import * as React from 'react';
 // import './WhiteSpace.css'
 
-export interface WhiteSpaceP {
-
-}
+export interface WhiteSpaceP {}
 
 export function WhiteSpace(props: WhiteSpaceP) {
-  return (
-    <span className="white-space"> </span>
-  )
+    return <span className="white-space"> </span>;
 }
