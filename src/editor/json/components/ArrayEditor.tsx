@@ -2,7 +2,11 @@ import * as React from 'react';
 import { LeftRightPair, LeftRightPairStatus } from '../../../components/LeftRightPair';
 import { switchNodeType } from '../internal/switchNodeType';
 import { NullEditor } from './NullEditor';
+import { StringEditor } from './StringEditor';
+import { NumberEditor } from './NumberEditor';
+import { BooleanEditor } from './BooleanEditor';
 import { ArrayNode } from '../base/ArrayNode';
+import { ObjectEditor } from './ObjectEditor';
 
 export interface ArrayEditorP {
     status: ArrayNode;
@@ -39,9 +43,30 @@ export function ArrayEditor(props: ArrayEditorP): React.ReactElement<any> | null
                                     }}
                                 />
                             ),
-                            // tBoolean: () => {throw new Error('TODO')}
-                            // tNumber: () => T
-                            // tString: () => T
+                            Boolean: node => (
+                                <BooleanEditor
+                                    status={node}
+                                    onChangeStatus={newNode =>
+                                        props.onChangeStatus(props.status.replace(node, newNode))
+                                    }
+                                />
+                            ),
+                            Number: node => (
+                                <NumberEditor
+                                    status={node}
+                                    onChangeStatus={newNode => {
+                                        props.onChangeStatus(props.status.replace(node, newNode));
+                                    }}
+                                />
+                            ),
+                            String: node => (
+                                <StringEditor
+                                    status={node}
+                                    onChangeStatus={newNode => {
+                                        props.onChangeStatus(props.status.replace(node, newNode));
+                                    }}
+                                />
+                            ),
                             Array: node => (
                                 <ArrayEditor
                                     status={node}
@@ -50,7 +75,14 @@ export function ArrayEditor(props: ArrayEditorP): React.ReactElement<any> | null
                                     }}
                                 />
                             ),
-                            // tObject: () => T
+                            Object: node => (
+                                <ObjectEditor
+                                    status={node}
+                                    onChangeStatus={newNode => {
+                                        props.onChangeStatus(props.status.replace(node, newNode));
+                                    }}
+                                />
+                            ),
                         })}
                         {i < props.status.getValue().length - 1 ? (
                             <span

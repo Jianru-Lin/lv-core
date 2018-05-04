@@ -3,12 +3,12 @@ import { Node } from './base/def/Node';
 import { Block } from '../../components/Block';
 import { parseJson } from './internal/parseJson';
 import { switchNodeType } from './internal/switchNodeType';
-// import { NumberEditor } from './components/NumberEditor'
-// import { BooleanEditor } from './components/BooleanEditor'
-// import { StringEditor } from './components/StringEditor'
+import { NumberEditor } from './components/NumberEditor';
+import { BooleanEditor } from './components/BooleanEditor';
+import { StringEditor } from './components/StringEditor';
 import { NullEditor } from './components/NullEditor';
 import { ArrayEditor } from './components/ArrayEditor';
-// import { ObjectEditor } from './components/ObjectEditor'
+import { ObjectEditor } from './components/ObjectEditor';
 
 export class JsonEditorStatus {
     private jsonText: string = '';
@@ -77,10 +77,30 @@ export function JsonEditor(props: JsonEditorP) {
                         onChangeStatus={newNode => props.onChangeStatus(status.setNode(newNode))}
                     />
                 ),
-                // Boolean: () => null, // <BooleanEditor status={new BooleanEditorStatus(s)} onChangeStatus={() => props.onChangeStatus(s)} />,
-                // Number: () => null, // <NumberEditor status={new NumberEditorStatus(s)} onChangeStatus={() => props.onChangeStatus(s)} />,
-                // String: () => null, // <StringEditor status={new StringEditorStatus(s)} onChangeStatus={() => props.onChangeStatus(s)} />,
-                // Object: () => null, // <ObjectEditor status={new ObjectEditorStatus(s)} onChangeStatus={() => props.onChangeStatus(s)} />,
+                Boolean: node => (
+                    <BooleanEditor
+                        status={node}
+                        onChangeStatus={newNode => props.onChangeStatus(status.setNode(newNode))}
+                    />
+                ),
+                Number: node => (
+                    <NumberEditor
+                        status={node}
+                        onChangeStatus={newNode => props.onChangeStatus(status.setNode(newNode))}
+                    />
+                ),
+                String: node => (
+                    <StringEditor
+                        status={node}
+                        onChangeStatus={newNode => props.onChangeStatus(status.setNode(newNode))}
+                    />
+                ),
+                Object: node => (
+                    <ObjectEditor
+                        status={node}
+                        onChangeStatus={newNode => props.onChangeStatus(status.setNode(newNode))}
+                    />
+                ),
                 Array: node => (
                     <ArrayEditor
                         status={node}

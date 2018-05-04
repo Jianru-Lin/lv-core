@@ -1,34 +1,11 @@
-// import * as React from 'react'
-// import { Block, BlockData } from '../../../components/Block'
+import * as React from 'react';
+import { NumberNode } from '../base/NumberNode';
 
-// export class NumberEditorStatus {
-//   value: number
-//   blockData: BlockData
+export interface NumberEditorP {
+    status: NumberNode;
+    onChangeStatus: (status: NumberNode) => void;
+}
 
-//   constructor(value: number) {
-//     this.value = value
-//     this.blockData = { open: true, hover: false }
-//   }
-
-//   toJsonText() {
-//     return this.value.toString()
-//   }
-// }
-
-// export interface NumberEditorP {
-//   status: NumberEditorStatus
-//   onChangeStatus: (status: NumberEditorStatus) => void
-// }
-
-// export function NumberEditor(props: NumberEditorP) {
-//   return (
-//     <Block
-//       data={props.status.blockData}
-//       onChange={blockData => {
-//         props.status.blockData = blockData
-//         props.onChangeStatus(props.status)
-//       }}>
-//       {props.status.value}
-//     </Block>
-//   )
-// }
+export function NumberEditor(props: NumberEditorP) {
+    return <span>{props.status.getValue().toString()}</span>;
+}
