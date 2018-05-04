@@ -55,6 +55,7 @@ export class JsonEditorStatus {
 }
 
 export interface JsonEditorP {
+    style?: React.CSSProperties;
     status: JsonEditorStatus;
     onChangeStatus: (status: JsonEditorStatus) => void;
 }
@@ -69,7 +70,7 @@ export function JsonEditor(props: JsonEditorP) {
     }
 
     return (
-        <div>
+        <div style={props.style}>
             {switchNodeType(node, {
                 Null: node => (
                     <NullEditor

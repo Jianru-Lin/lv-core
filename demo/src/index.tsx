@@ -1,7 +1,16 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-const links = ['Block', 'LeftRightPair', 'Icon', 'Menu', 'MenuItem', 'ButtonMenu', 'JsonEditor'];
+const links = [
+    'Block',
+    'LeftRightPair',
+    'Icon',
+    'Menu',
+    'MenuItem',
+    'ButtonMenu',
+    'JsonEditor',
+    'JsonEditorPlay',
+];
 
 const content = (
     <div
