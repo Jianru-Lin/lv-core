@@ -22,7 +22,7 @@ export type ReadyData = {
 export class JsonEditorStatus {
     private data: [Kind.Error, string] | [Kind.Ready, ReadyData];
 
-    constructor(text: string) {
+    constructor(text?: string | null) {
         if (!text) {
             this.data = [
                 Kind.Ready,
@@ -101,16 +101,19 @@ export interface JsonEditorS {}
 
 export function JsonEditor(props: JsonEditorP) {
     const status = props.status;
+    const style = {
+        lineHeight: '2em',
+    };
     return status.switchData({
         ready: ({ root }) => {
             if (!root) {
-                return <div />;
+                return <div style={{ ...props.style, style }} />;
             }
 
-            return <div style={props.style}>{editorOfNode(root)}</div>;
+            return <div style={{ ...props.style, style }}>{editorOfNode(root)}</div>;
         },
         error: str => {
-            return <div>{str}</div>;
+            return <div style={{ ...props.style, style }}>{str}</div>;
         },
     });
 }
