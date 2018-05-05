@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { BooleanNode } from '../base/BooleanNode';
+import { BooleanNode } from '../model';
 
 export interface BooleanEditorP {
-    status: BooleanNode;
-    onChangeStatus: (status: BooleanNode) => void;
+    node: BooleanNode;
 }
 
 export function BooleanEditor(props: BooleanEditorP) {
-    return <span>{props.status.getValue().toString()}</span>;
+    return <span>{props.node.value.toString()}</span>;
 }

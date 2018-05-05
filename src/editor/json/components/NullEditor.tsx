@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { NullNode } from '../base/NullNode';
+import { NullNode } from '../model';
 
 export interface NullEditorP {
-    status: NullNode;
-    onChangeStatus: (status: NullNode) => void;
+    node: NullNode;
 }
 
 export function NullEditor(props: NullEditorP) {

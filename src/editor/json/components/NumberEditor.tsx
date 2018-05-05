@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { NumberNode } from '../base/NumberNode';
+import { NumberNode } from '../model';
 
 export interface NumberEditorP {
-    status: NumberNode;
-    onChangeStatus: (status: NumberNode) => void;
+    node: NumberNode;
 }
 
 export function NumberEditor(props: NumberEditorP) {
-    return <span>{props.status.getValue().toString()}</span>;
+    return <span>{props.node.value.toString()}</span>;
 }

@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { StringNode } from '../base/StringNode';
+import { StringNode } from '../model';
 
 export interface StringEditorP {
-    status: StringNode;
-    onChangeStatus: (status: StringNode) => void;
+    node: StringNode;
 }
 
 export function StringEditor(props: StringEditorP) {
-    return <span>{JSON.stringify(props.status.getValue())}</span>;
+    return <span>{JSON.stringify(props.node.value)}</span>;
 }

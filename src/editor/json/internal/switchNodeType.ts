@@ -1,35 +1,39 @@
-import { Node, NodeType } from '../base/def/Node';
-import { NullNode } from '../base/NullNode';
-import { BooleanNode } from '../base/BooleanNode';
-import { NumberNode } from '../base/NumberNode';
-import { StringNode } from '../base/StringNode';
-import { ArrayNode } from '../base/ArrayNode';
-import { ObjectNode } from '../base/ObjectNode';
+import {
+    NodeType,
+    Node,
+    NullNode,
+    BooleanNode,
+    NumberNode,
+    StringNode,
+    ObjectNode,
+    ArrayNode,
+} from '../model';
 
-export interface SwitchNodeTypeCase<T> {
-    Null?: (node: NullNode) => T;
-    Boolean?: (node: BooleanNode) => T;
-    Number?: (node: NumberNode) => T;
-    String?: (node: StringNode) => T;
-    Array?: (node: ArrayNode) => T;
-    Object?: (node: ObjectNode) => T;
-}
-
-export function switchNodeType<T = any>(node: Node, cases: SwitchNodeTypeCase<T>): T | undefined {
-    switch (node.getType()) {
+export function switchNodeType<T = any>(
+    node: Node,
+    cb: {
+        Null: (node: NullNode) => T;
+        Boolean: (node: BooleanNode) => T;
+        Number: (node: NumberNode) => T;
+        String: (node: StringNode) => T;
+        Object: (node: ObjectNode) => T;
+        Array: (node: ArrayNode) => T;
+    }
+): T {
+    switch (node.type) {
         case NodeType.Null:
-            return cases.Null ? cases.Null(node as NullNode) : undefined;
+            return cb.Null(node as NullNode);
         case NodeType.Boolean:
-            return cases.Boolean ? cases.Boolean(node as BooleanNode) : undefined;
+            return cb.Boolean(node as BooleanNode);
         case NodeType.Number:
-            return cases.Number ? cases.Number(node as NumberNode) : undefined;
+            return cb.Number(node as NumberNode);
         case NodeType.String:
-            return cases.String ? cases.String(node as StringNode) : undefined;
-        case NodeType.Array:
-            return cases.Array ? cases.Array(node as ArrayNode) : undefined;
+            return cb.String(node as StringNode);
         case NodeType.Object:
-            return cases.Object ? cases.Object(node as ObjectNode) : undefined;
+            return cb.Object(node as ObjectNode);
+        case NodeType.Array:
+            return cb.Array(node as ArrayNode);
         default:
-            throw new Error('unknown node type: ' + node.getType());
+            throw new Error('Stupid.');
     }
 }
