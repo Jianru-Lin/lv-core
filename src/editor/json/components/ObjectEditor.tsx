@@ -30,6 +30,7 @@ export class ObjectEditor extends React.Component<ObjectEditorP, ObjectEditorS> 
             pair: {
                 display: 'flex',
                 flexDirection: 'row',
+                alignItems: 'center',
             },
             pair_name: {},
             pair_node: {},

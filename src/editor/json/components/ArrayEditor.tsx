@@ -30,6 +30,7 @@ export class ArrayEditor extends React.Component<ArrayEditorP, ArrayEditorS> {
             element: {
                 display: 'flex',
                 flexDirection: 'row',
+                alignItems: 'center',
             },
             comma: {
                 cursor: 'pointer',

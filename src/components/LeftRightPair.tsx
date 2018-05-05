@@ -20,7 +20,7 @@ export class LeftRightPairStatus {
 
     constructor(hover: boolean) {
         this.hover = hover;
-        this.blockStatus = new BlockStatus(false, hover);
+        this.blockStatus = new BlockStatus(true, hover);
     }
 
     clone() {

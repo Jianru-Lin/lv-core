@@ -15,12 +15,20 @@ export class JsonEditorPlay extends React.Component<JsonEditorPlayP, JsonEditorP
     constructor(props: JsonEditorPlayP) {
         super(props);
 
-        const text = '{}';
+        const text = this.load() || '{}';
 
         this.state = {
             text,
             editorStatus: new JsonEditorStatus(text),
         };
+    }
+
+    load() {
+        return localStorage.getItem('JsonEditorPlay');
+    }
+
+    save(v: string) {
+        localStorage.setItem('JsonEditorPlay', v);
     }
 
     render() {
@@ -42,6 +50,7 @@ export class JsonEditorPlay extends React.Component<JsonEditorPlayP, JsonEditorP
                         onChange={v => {
                             const text = v.target.value;
                             this.setState({ text, editorStatus: new JsonEditorStatus(text) });
+                            this.save(text);
                         }}
                     />
                 </div>
