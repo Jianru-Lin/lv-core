@@ -107,13 +107,13 @@ export function JsonEditor(props: JsonEditorP) {
     return status.switchData({
         ready: ({ root }) => {
             if (!root) {
-                return <div style={{ ...props.style, style }} />;
+                return <div style={{ ...props.style, ...style }} />;
             }
 
-            return <div style={{ ...props.style, style }}>{editorOfNode(root)}</div>;
+            return <div style={{ ...props.style, ...style }}>{editorOfNode(root)}</div>;
         },
         error: str => {
-            return <div style={{ ...props.style, style }}>{str}</div>;
+            return <div style={{ ...props.style, ...style }}>{str}</div>;
         },
     });
 }

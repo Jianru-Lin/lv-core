@@ -26,11 +26,12 @@ export class ObjectEditor extends React.Component<ObjectEditorP, ObjectEditorS> 
             root: {
                 display: 'flex',
                 flexDirection: node.layout === Layout.Horizontal ? 'row' : 'column',
+                alignItems: 'baseline',
             },
             pair: {
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'center',
+                alignItems: 'baseline',
             },
             pair_name: {},
             pair_node: {},
@@ -52,7 +53,8 @@ export class ObjectEditor extends React.Component<ObjectEditorP, ObjectEditorS> 
                                     <span
                                         style={style.comma}
                                         onClick={e => {
-                                            alert('todo');
+                                            node.toggleLayout();
+                                            this.forceUpdate();
                                         }}>
                                         ,&nbsp;
                                     </span>

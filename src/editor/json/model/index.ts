@@ -64,6 +64,10 @@ export class ObjectNode implements Node {
         this.props = [];
         this.layout = Layout.Vertical;
     }
+
+    toggleLayout() {
+        this.layout = this.layout === Layout.Horizontal ? Layout.Vertical : Layout.Horizontal;
+    }
 }
 
 export class ArrayNode implements Node {
@@ -75,5 +79,9 @@ export class ArrayNode implements Node {
     constructor() {
         this.elements = [];
         this.layout = Layout.Vertical;
+    }
+
+    toggleLayout() {
+        this.layout = this.layout === Layout.Horizontal ? Layout.Vertical : Layout.Horizontal;
     }
 }

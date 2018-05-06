@@ -26,11 +26,12 @@ export class ArrayEditor extends React.Component<ArrayEditorP, ArrayEditorS> {
             root: {
                 display: 'flex',
                 flexDirection: node.layout === Layout.Horizontal ? 'row' : 'column',
+                alignItems: 'baseline',
             },
             element: {
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'center',
+                alignItems: 'baseline',
             },
             comma: {
                 cursor: 'pointer',
@@ -48,7 +49,8 @@ export class ArrayEditor extends React.Component<ArrayEditorP, ArrayEditorS> {
                                 <span
                                     style={style.comma}
                                     onClick={e => {
-                                        alert('todo');
+                                        node.toggleLayout();
+                                        this.forceUpdate();
                                     }}>
                                     ,&nbsp;
                                 </span>
