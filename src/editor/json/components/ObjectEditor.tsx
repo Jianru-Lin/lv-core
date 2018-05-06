@@ -33,8 +33,14 @@ export class ObjectEditor extends React.Component<ObjectEditorP, ObjectEditorS> 
                 flexDirection: 'row',
                 alignItems: 'baseline',
             },
+            pair_not_last: {
+                marginBottom: '0.5em',
+            },
             pair_name: {},
-            pair_node: {},
+            pair_node: {
+                display: 'flex',
+                alignItems: 'baseline',
+            },
             comma: {
                 cursor: 'pointer',
             },
@@ -45,19 +51,23 @@ export class ObjectEditor extends React.Component<ObjectEditorP, ObjectEditorS> 
             body = (
                 <div style={style.root}>
                     {node.props.map((pair, i) => (
-                        <div style={style.pair}>
+                        <div
+                            style={{
+                                ...style.pair,
+                                ...(i < node.props.length - 1 ? style.pair_not_last : null),
+                            }}>
                             <div style={style.pair_name}>{pair.name}:&nbsp;</div>
                             <div style={style.pair_node}>
                                 {editorOfNode(pair.node)}
                                 {i < node.props.length - 1 ? (
-                                    <span
+                                    <div
                                         style={style.comma}
                                         onClick={e => {
                                             node.toggleLayout();
                                             this.forceUpdate();
                                         }}>
                                         ,&nbsp;
-                                    </span>
+                                    </div>
                                 ) : null}
                             </div>
                         </div>

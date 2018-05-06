@@ -33,6 +33,9 @@ export class ArrayEditor extends React.Component<ArrayEditorP, ArrayEditorS> {
                 flexDirection: 'row',
                 alignItems: 'baseline',
             },
+            element_not_last: {
+                marginBottom: '0.5em',
+            },
             comma: {
                 cursor: 'pointer',
             },
@@ -43,17 +46,21 @@ export class ArrayEditor extends React.Component<ArrayEditorP, ArrayEditorS> {
             body = (
                 <div style={style.root}>
                     {node.elements.map((elNode, i) => (
-                        <div style={style.element}>
+                        <div
+                            style={{
+                                ...style.element,
+                                ...(i < node.elements.length - 1 ? style.element_not_last : null),
+                            }}>
                             {editorOfNode(elNode)}
                             {i < node.elements.length - 1 ? (
-                                <span
+                                <div
                                     style={style.comma}
                                     onClick={e => {
                                         node.toggleLayout();
                                         this.forceUpdate();
                                     }}>
                                     ,&nbsp;
-                                </span>
+                                </div>
                             ) : null}
                         </div>
                     ))}
