@@ -33,8 +33,19 @@ export class JsonEditorPlay extends React.Component<JsonEditorPlayP, JsonEditorP
 
     render() {
         return (
-            <div style={{ width: '100%', height: '100%', display: 'flex', color: 'rgb(199, 199, 199)' }}>
-                <div style={{ flexBasis: '50%', height: '100%', border: 'solid 1px white', padding: 16 }}>
+            <div
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    color: 'rgb(199, 199, 199)',
+                }}>
+                <div
+                    style={{
+                        backgroundColor: '#333',
+                        padding: 16,
+                    }}>
                     <textarea
                         style={{
                             width: '100%',
@@ -54,7 +65,12 @@ export class JsonEditorPlay extends React.Component<JsonEditorPlayP, JsonEditorP
                         }}
                     />
                 </div>
-                <div style={{ flexBasis: '50%', height: '100%', border: 'solid 1px white', padding: 16 }}>
+                <div
+                    style={{
+                        border: 'solid 1px #333',
+                        padding: 16,
+                        overflow: 'auto',
+                    }}>
                     <JsonEditor
                         style={{ width: '100%', height: '100%' }}
                         status={this.state.editorStatus}
