@@ -25,7 +25,7 @@ export class ObjectEditor extends React.Component<ObjectEditorP, ObjectEditorS> 
         const style: { [key: string]: React.CSSProperties } = {
             root: {
                 display: 'flex',
-                flexDirection: node.layout === Layout.Horizontal ? 'row' : 'column',
+                flexDirection: node.manager.getLayout(node) === Layout.Horizontal ? 'row' : 'column',
                 alignItems: 'baseline',
             },
             pair: {
@@ -63,8 +63,7 @@ export class ObjectEditor extends React.Component<ObjectEditorP, ObjectEditorS> 
                                     <div
                                         style={style.comma}
                                         onClick={e => {
-                                            node.toggleLayout();
-                                            this.forceUpdate();
+                                            node.manager.toggleLayout(node);
                                         }}>
                                         ,&nbsp;
                                     </div>

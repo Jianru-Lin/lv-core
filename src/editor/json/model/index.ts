@@ -14,22 +14,36 @@ export enum Layout {
     Vertical,
 }
 
+export interface NodeManager {
+    getLayout: (node: ArrayNode | ObjectNode) => Layout;
+    setLayout: (node: ArrayNode | ObjectNode, v: Layout) => void;
+    toggleLayout: (node: ArrayNode | ObjectNode) => void;
+}
+
 export interface Node {
     id: string;
     type: NodeType;
+    manager: NodeManager;
 }
 
 export class NullNode implements Node {
     id = uuid();
     type: NodeType = NodeType.Null;
+    manager: NodeManager;
+
+    constructor(manager: NodeManager) {
+        this.manager = manager;
+    }
 }
 
 export class NumberNode implements Node {
     id = uuid();
     type = NodeType.Number;
+    manager: NodeManager;
     value: number;
 
-    constructor(value: number) {
+    constructor(manager: NodeManager, value: number) {
+        this.manager = manager;
         this.value = value;
     }
 }
@@ -37,9 +51,11 @@ export class NumberNode implements Node {
 export class BooleanNode implements Node {
     id = uuid();
     type = NodeType.Boolean;
+    manager: NodeManager;
     value: boolean;
 
-    constructor(value: boolean) {
+    constructor(manager: NodeManager, value: boolean) {
+        this.manager = manager;
         this.value = value;
     }
 }
@@ -47,9 +63,11 @@ export class BooleanNode implements Node {
 export class StringNode implements Node {
     id = uuid();
     type = NodeType.String;
+    manager: NodeManager;
     value: string;
 
-    constructor(value: string) {
+    constructor(manager: NodeManager, value: string) {
+        this.manager = manager;
         this.value = value;
     }
 }
@@ -57,31 +75,21 @@ export class StringNode implements Node {
 export class ObjectNode implements Node {
     id = uuid();
     type = NodeType.Object;
-    props: { name: string; node: Node }[];
-    layout: Layout;
+    manager: NodeManager;
+    props: { name: string; node: Node }[] = [];
 
-    constructor() {
-        this.props = [];
-        this.layout = Layout.Vertical;
-    }
-
-    toggleLayout() {
-        this.layout = this.layout === Layout.Horizontal ? Layout.Vertical : Layout.Horizontal;
+    constructor(manager: NodeManager) {
+        this.manager = manager;
     }
 }
 
 export class ArrayNode implements Node {
     id = uuid();
     type = NodeType.Array;
-    elements: Node[];
-    layout: Layout;
+    manager: NodeManager;
+    elements: Node[] = [];
 
-    constructor() {
-        this.elements = [];
-        this.layout = Layout.Vertical;
-    }
-
-    toggleLayout() {
-        this.layout = this.layout === Layout.Horizontal ? Layout.Vertical : Layout.Horizontal;
+    constructor(manager: NodeManager) {
+        this.manager = manager;
     }
 }
