@@ -18,6 +18,9 @@ export interface NodeManager {
     getLayout: (node: ArrayNode | ObjectNode) => Layout;
     setLayout: (node: ArrayNode | ObjectNode, v: Layout) => void;
     toggleLayout: (node: ArrayNode | ObjectNode) => void;
+    getOpen: (node: Node) => boolean;
+    setOpen: (node: Node, v: boolean) => void;
+    toggleOpen: (node: Node) => void;
 }
 
 export interface Node {

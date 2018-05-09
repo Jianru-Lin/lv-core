@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { LeftRightPair, LeftRightPairStatus } from '../../../components/LeftRightPair';
+import { LeftRightPairSimple } from '../../../components/LeftRightPair';
 import { ObjectNode, Layout } from '../model';
 import { editorOfNode } from '../internal';
 
@@ -7,16 +7,12 @@ export interface ObjectEditorP {
     node: ObjectNode;
 }
 
-export interface ObjectEditorS {
-    lrStatus: LeftRightPairStatus;
-}
+export interface ObjectEditorS {}
 
 export class ObjectEditor extends React.Component<ObjectEditorP, ObjectEditorS> {
     constructor(props: ObjectEditorP) {
         super(props);
-        this.state = {
-            lrStatus: new LeftRightPairStatus(false),
-        };
+        this.state = {};
     }
 
     render() {
@@ -76,17 +72,15 @@ export class ObjectEditor extends React.Component<ObjectEditorP, ObjectEditorS> 
         }
 
         return (
-            <LeftRightPair
+            <LeftRightPairSimple
                 left="{"
                 right="}"
-                data={this.state.lrStatus}
-                onChange={lrStatus => {
-                    this.setState({
-                        lrStatus,
-                    });
+                open={node.manager.getOpen(node)}
+                onChange={open => {
+                    node.manager.setOpen(node, open);
                 }}>
                 {body}
-            </LeftRightPair>
+            </LeftRightPairSimple>
         );
     }
 }

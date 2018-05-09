@@ -149,3 +149,34 @@ export function Block(props: BlockP) {
 }
 
 export const BlockWithState = WithState<BlockStatus>(Block, new BlockStatus(false, false));
+
+export interface BlockSimpleP {
+    open: boolean;
+    onChange: (open: boolean) => void;
+}
+
+export interface BlockSimpleS {
+    bStatus: BlockStatus;
+}
+
+export class BlockSimple extends React.Component<BlockSimpleP, BlockSimpleS> {
+    constructor(props: BlockSimpleP) {
+        super(props);
+        this.state = { bStatus: new BlockStatus(this.props.open, false) };
+    }
+
+    render() {
+        return (
+            <Block
+                data={this.state.bStatus}
+                onChange={bStatus => {
+                    this.setState({
+                        bStatus,
+                    });
+                    this.props.onChange(bStatus.getOpen());
+                }}>
+                {this.props.children}
+            </Block>
+        );
+    }
+}

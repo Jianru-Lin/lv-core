@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { LeftRightPair, LeftRightPairStatus } from '../../../components/LeftRightPair';
+import { LeftRightPairSimple } from '../../../components/LeftRightPair';
 import { ArrayNode, Layout } from '../model';
 import { editorOfNode } from '../internal';
 
@@ -7,16 +7,12 @@ export interface ArrayEditorP {
     node: ArrayNode;
 }
 
-export interface ArrayEditorS {
-    lrStatus: LeftRightPairStatus;
-}
+export interface ArrayEditorS {}
 
 export class ArrayEditor extends React.Component<ArrayEditorP, ArrayEditorS> {
     constructor(props: ArrayEditorP) {
         super(props);
-        this.state = {
-            lrStatus: new LeftRightPairStatus(false),
-        };
+        this.state = {};
     }
 
     render() {
@@ -68,17 +64,15 @@ export class ArrayEditor extends React.Component<ArrayEditorP, ArrayEditorS> {
         }
 
         return (
-            <LeftRightPair
+            <LeftRightPairSimple
                 left="["
                 right="]"
-                data={this.state.lrStatus}
-                onChange={lrStatus => {
-                    this.setState({
-                        lrStatus,
-                    });
+                open={node.manager.getOpen(node)}
+                onChange={open => {
+                    node.manager.setOpen(node, open);
                 }}>
                 {body}
-            </LeftRightPair>
+            </LeftRightPairSimple>
         );
     }
 }

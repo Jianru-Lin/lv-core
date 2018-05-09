@@ -20,7 +20,7 @@ export class LeftRightPairStatus {
 
     constructor(hover: boolean) {
         this.hover = hover;
-        this.blockStatus = new BlockStatus(true, hover);
+        this.blockStatus = new BlockStatus(false, hover);
     }
 
     clone() {
@@ -156,3 +156,40 @@ export const LeftRightPairWithState = WithState<LeftRightPairStatus, LeftRightPa
     LeftRightPair,
     new LeftRightPairStatus(false)
 );
+
+export interface LeftRightPairSimpleP {
+    left: string;
+    right: string;
+    open: boolean;
+    onChange: (open: boolean) => void;
+}
+
+export interface LeftRightPairSimpleS {
+    lrStatus: LeftRightPairStatus;
+}
+
+export class LeftRightPairSimple extends React.Component<LeftRightPairSimpleP, LeftRightPairSimpleS> {
+    constructor(props: LeftRightPairSimpleP) {
+        super(props);
+        this.state = {
+            lrStatus: new LeftRightPairStatus(false),
+        };
+    }
+
+    render() {
+        return (
+            <LeftRightPair
+                left={this.props.left}
+                right={this.props.right}
+                data={this.state.lrStatus}
+                onChange={lrStatus => {
+                    this.setState({
+                        lrStatus,
+                    });
+                    this.props.onChange(lrStatus.getOpen());
+                }}>
+                {this.props.children}
+            </LeftRightPair>
+        );
+    }
+}

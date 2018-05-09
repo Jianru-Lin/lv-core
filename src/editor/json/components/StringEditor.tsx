@@ -1,36 +1,34 @@
 import * as React from 'react';
 import { StringNode } from '../model';
-import { LeftRightPair, LeftRightPairStatus } from '../../../components/LeftRightPair';
+import { BlockSimple } from '../../../components/Block';
+import { LeftRightPairSimple } from '../../../components/LeftRightPair';
 
 export interface StringEditorP {
     node: StringNode;
 }
 
-export interface StringEditorS {
-    lrStatus: LeftRightPairStatus;
-}
+export interface StringEditorS {}
 
 export class StringEditor extends React.Component<StringEditorP, StringEditorS> {
     constructor(props: StringEditorP) {
         super(props);
-        this.state = {
-            lrStatus: new LeftRightPairStatus(false),
-        };
+        this.state = {};
     }
 
     render() {
-        let str = this.props.node.value;
+        const { node } = this.props;
+        const str = this.props.node.value;
 
         return (
-            <LeftRightPair
+            <LeftRightPairSimple
                 left={'"'}
                 right={'"'}
-                data={this.state.lrStatus}
-                onChange={lrStatus => {
-                    this.setState({ lrStatus });
+                open={node.manager.getOpen(node)}
+                onChange={open => {
+                    node.manager.setOpen(node, open);
                 }}>
                 {str.split('\n').map(line => <div style={{ whiteSpace: 'pre' }}>{line}</div>)}
-            </LeftRightPair>
+            </LeftRightPairSimple>
         );
     }
 }

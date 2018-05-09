@@ -36,6 +36,7 @@ export class Manager implements NodeManager, ReadyData {
     ext: {
         [key: string]: {
             layout: Layout;
+            fold: boolean;
         };
     };
     private onChange: () => void;
@@ -71,9 +72,26 @@ export class Manager implements NodeManager, ReadyData {
         }
     }
 
+    getOpen(node: Node) {
+        return this.ext[node.id].fold;
+    }
+
+    setOpen(node: Node, v: boolean) {
+        this.ext[node.id].fold = v;
+        this.onChange();
+    }
+
+    toggleOpen(node: Node) {
+        this.setOpen(node, !this.getOpen(node));
+    }
+
     private createNodeFromValue(value: any): Node {
         const save = (node: Node) => {
             this.nodeList.push(node);
+            this.ext[node.id] = {
+                layout: Layout.Vertical,
+                fold: true,
+            };
             return node;
         };
 
@@ -90,20 +108,14 @@ export class Manager implements NodeManager, ReadyData {
                         node: this.createNodeFromValue(value[name]),
                     });
                 });
-                // ext info
-                this.ext[node.id] = {
-                    layout: Layout.Vertical,
-                };
-                return node;
+                return save(node);
             },
             tArray: () => {
                 const node = new ArrayNode(this);
                 for (const el of value) {
                     node.elements.push(this.createNodeFromValue(el));
                 }
-                // ext info
-                this.ext[node.id] = { layout: Layout.Vertical };
-                return node;
+                return save(node);
             },
         });
     }
@@ -150,17 +162,16 @@ export interface JsonEditorS {}
 export class JsonEditor extends React.Component<JsonEditorP, JsonEditorS> {
     constructor(props: JsonEditorP) {
         super(props);
+    }
+
+    render() {
         // dirty: hook onChange
         this.props.status.onChange = () => {
             this.forceUpdate();
         };
-    }
 
-    render() {
         const status = this.props.status;
-        const style = {
-            lineHeight: '2em',
-        };
+        const style = { lineHeight: '2em' };
         return status.switchData({
             ready: ({ root }) => {
                 if (!root) {
