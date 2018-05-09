@@ -36,7 +36,7 @@ export class Manager implements NodeManager, ReadyData {
     ext: {
         [key: string]: {
             layout: Layout;
-            fold: boolean;
+            open: boolean;
         };
     };
     private onChange: () => void;
@@ -73,11 +73,11 @@ export class Manager implements NodeManager, ReadyData {
     }
 
     getOpen(node: Node) {
-        return this.ext[node.id].fold;
+        return this.ext[node.id].open;
     }
 
     setOpen(node: Node, v: boolean) {
-        this.ext[node.id].fold = v;
+        this.ext[node.id].open = v;
         this.onChange();
     }
 
@@ -90,7 +90,7 @@ export class Manager implements NodeManager, ReadyData {
             this.nodeList.push(node);
             this.ext[node.id] = {
                 layout: Layout.Vertical,
-                fold: true,
+                open: true,
             };
             return node;
         };

@@ -171,8 +171,12 @@ export interface LeftRightPairSimpleS {
 export class LeftRightPairSimple extends React.Component<LeftRightPairSimpleP, LeftRightPairSimpleS> {
     constructor(props: LeftRightPairSimpleP) {
         super(props);
+
+        let lrStatus = new LeftRightPairStatus(false);
+        lrStatus = lrStatus.setOpen(this.props.open);
+
         this.state = {
-            lrStatus: new LeftRightPairStatus(false),
+            lrStatus: lrStatus,
         };
     }
 

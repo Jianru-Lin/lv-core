@@ -20,21 +20,20 @@ export class ArrayEditor extends React.Component<ArrayEditorP, ArrayEditorS> {
 
         const style: { [key: string]: React.CSSProperties } = {
             root: {
-                display: 'flex',
-                flexDirection: node.manager.getLayout(node) === Layout.Horizontal ? 'row' : 'column',
+                display: 'grid',
+                gridTemplateColumns:
+                    node.manager.getLayout(node) === Layout.Horizontal
+                        ? `repeat(${node.elements.length}, auto)`
+                        : undefined,
+                gridTemplateRows:
+                    node.manager.getLayout(node) === Layout.Vertical
+                        ? `repeat(${node.elements.length}, auto)`
+                        : undefined,
+                rowGap: '1em',
                 alignItems: 'baseline',
             },
-            element: {
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'baseline',
-            },
-            element_not_last: {
-                marginBottom: '0.5em',
-            },
-            comma: {
-                cursor: 'pointer',
-            },
+            element: { display: 'flex', flexDirection: 'row', alignItems: 'baseline' },
+            comma: { cursor: 'pointer' },
         };
 
         let body: React.ReactNode = null;
@@ -42,11 +41,7 @@ export class ArrayEditor extends React.Component<ArrayEditorP, ArrayEditorS> {
             body = (
                 <div style={style.root}>
                     {node.elements.map((elNode, i) => (
-                        <div
-                            style={{
-                                ...style.element,
-                                ...(i < node.elements.length - 1 ? style.element_not_last : null),
-                            }}>
+                        <div style={style.element}>
                             {editorOfNode(elNode)}
                             {i < node.elements.length - 1 ? (
                                 <div

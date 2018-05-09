@@ -20,8 +20,16 @@ export class ObjectEditor extends React.Component<ObjectEditorP, ObjectEditorS> 
 
         const style: { [key: string]: React.CSSProperties } = {
             root: {
-                display: 'flex',
-                flexDirection: node.manager.getLayout(node) === Layout.Horizontal ? 'row' : 'column',
+                display: 'grid',
+                gridTemplateRows:
+                    node.manager.getLayout(node) === Layout.Vertical
+                        ? `repeat(${node.props.length}, auto)`
+                        : undefined,
+                gridTemplateColumns:
+                    node.manager.getLayout(node) === Layout.Horizontal
+                        ? `repeat(${node.props.length}, auto)`
+                        : undefined,
+                rowGap: '1em',
                 alignItems: 'baseline',
             },
             pair: {
@@ -29,17 +37,9 @@ export class ObjectEditor extends React.Component<ObjectEditorP, ObjectEditorS> 
                 flexDirection: 'row',
                 alignItems: 'baseline',
             },
-            pair_not_last: {
-                marginBottom: '0.5em',
-            },
             pair_name: {},
-            pair_node: {
-                display: 'flex',
-                alignItems: 'baseline',
-            },
-            comma: {
-                cursor: 'pointer',
-            },
+            pair_node: { display: 'flex', alignItems: 'baseline' },
+            comma: { cursor: 'pointer' },
         };
 
         let body: React.ReactNode = null;
@@ -47,11 +47,7 @@ export class ObjectEditor extends React.Component<ObjectEditorP, ObjectEditorS> 
             body = (
                 <div style={style.root}>
                     {node.props.map((pair, i) => (
-                        <div
-                            style={{
-                                ...style.pair,
-                                ...(i < node.props.length - 1 ? style.pair_not_last : null),
-                            }}>
+                        <div style={style.pair}>
                             <div style={style.pair_name}>{pair.name}:&nbsp;</div>
                             <div style={style.pair_node}>
                                 {editorOfNode(pair.node)}
