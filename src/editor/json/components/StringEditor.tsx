@@ -20,15 +20,21 @@ export class StringEditor extends React.Component<StringEditorP, StringEditorS> 
         const str = this.props.node.value;
 
         return (
-            <LeftRightPairSimple
-                left={'"'}
-                right={'"'}
+            <BlockSimple
                 open={node.manager.getOpen(node)}
                 onChange={open => {
                     node.manager.setOpen(node, open);
                 }}>
-                {str.split('\n').map(line => <div style={{ whiteSpace: 'pre' }}>{line}</div>)}
-            </LeftRightPairSimple>
+                <LeftRightPairSimple
+                    left={'"'}
+                    right={'"'}
+                    open={node.manager.getOpen(node)}
+                    onChange={open => {
+                        node.manager.setOpen(node, open);
+                    }}>
+                    {str.split('\n').map(line => <div style={{ whiteSpace: 'pre' }}>{line}</div>)}
+                </LeftRightPairSimple>
+            </BlockSimple>
         );
     }
 }

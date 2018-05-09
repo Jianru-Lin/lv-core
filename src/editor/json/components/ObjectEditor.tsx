@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { BlockSimple } from '../../../components/Block';
 import { LeftRightPairSimple } from '../../../components/LeftRightPair';
 import { ObjectNode, Layout } from '../model';
 import { editorOfNode } from '../internal';
@@ -70,15 +71,21 @@ export class ObjectEditor extends React.Component<ObjectEditorP, ObjectEditorS> 
         }
 
         return (
-            <LeftRightPairSimple
-                left="{"
-                right="}"
+            <BlockSimple
                 open={node.manager.getOpen(node)}
                 onChange={open => {
                     node.manager.setOpen(node, open);
                 }}>
-                {body}
-            </LeftRightPairSimple>
+                <LeftRightPairSimple
+                    left="{"
+                    right="}"
+                    open={node.manager.getOpen(node)}
+                    onChange={open => {
+                        node.manager.setOpen(node, open);
+                    }}>
+                    {body}
+                </LeftRightPairSimple>
+            </BlockSimple>
         );
     }
 }
